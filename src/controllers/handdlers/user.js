@@ -1,10 +1,8 @@
 /////////////////////////////////////////////////////////////
 // Variables Iniciales
 
-const { createAddressDB } = require("../dbOperations/agenda");
 const { getAllUsersDB, getOneUserDB, deleteUserDB, updateDisabledUserDB, deleteAddressUserDB, updateUserDB } = require("../dbOperations/user")
 const dbOperationsUser = require("../dbOperations/user");
-const dbOperationsAgenda = require("../dbOperations/agenda");
 
 
 /////////////////////////////////////////////////////////////
@@ -69,13 +67,12 @@ const createUser = async (req,resp)=>{
         const {username, name,email,mobile,address,password} = req.body;
 
         let newUser = {
-            username,
+            name,
             email,
             password,
         }
 
         const userId = await  dbOperationsUser.createUserDB(newUser);
-        await dbOperationsAgenda.createAddressDB(address,userId);
 
         resp.status(201).json({"Message": `El usuario ha sido creado - userId: ${userId}`})
         
